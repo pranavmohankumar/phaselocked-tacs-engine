@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Project #10 Implementation Document - Closed-Loop tDCS/tACS Phase-Locked Stimulation Engine</title>
+    <style>
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; color: #1e293b; background-color: #f8fafc; padding: 30px; }
+        .container { max-width: 900px; margin: 0 auto; background: #ffffff; padding: 40px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        h1 { color: #0f172a; font-size: 24px; border-bottom: 2px solid #3b82f6; padding-bottom: 10px; margin-top: 0; }
+        h2 { color: #1e40af; font-size: 18px; margin-top: 25px; }
+        .badge { display: inline-block; background: #e0f2fe; color: #0369a1; padding: 4px 12px; border-radius: 20px; font-weight: bold; font-size: 12px; margin-bottom: 15px; }
+        .box { background: #f1f5f9; border-left: 4px solid #3b82f6; padding: 15px; margin: 15px 0; border-radius: 0 6px 6px 0; }
+        ul { padding-left: 20px; }
+        li { margin-bottom: 10px; }
+        pre { background: #0f172a; color: #f8fafc; padding: 15px; border-radius: 8px; overflow-x: auto; font-size: 13px; }
+        footer { margin-top: 40px; font-size: 12px; color: #64748b; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <span class="badge">Project #10 Specification</span>
+        <h1>Closed-Loop tDCS/tACS Phase-Locked Stimulation Engine</h1>
+        <p><strong>Target Industry Profile:</strong> Soterix Medical, Non-Invasive Neurotech Innovators</p>
+        
+        <h2>1. System Architecture & Concept</h2>
+        <div class="box">
+            <p>Hilbert Transform real-time phase estimator coupled with an adaptive current source waveform generator.</p>
+        </div>
+
+        <h2>2. Synthetic Bio-Data Engineering Strategy</h2>
+        <p>Streaming single-channel EEG showing prominent Alpha (10 Hz) ongoing cortical rhythms.</p>
+
+        <h2>3. Low-End LLM Prompt & Module Blueprint</h2>
+        <ul>
+            <li><strong>Module 1: Synthetic Cortical Rhythm Generator:</strong> Generate continuous EEG stream with amplitude-modulated 10Hz Alpha oscillations.</li>
+            <li><strong>Module 2: Hilbert Real-Time Phase Estimator:</strong> Implement narrow bandpass filter and Hilbert transform to extract instant EEG phase.</li>
+            <li><strong>Module 3: Phase-Locked Stimulation Trigger:</strong> Generate synchronized tACS current waveform targeting specific phase angles (e.g., peak at 90°).</li>
+        </ul>
+
+        <h2>4. Core Technical Starter Skeleton</h2>
+        <pre><code>import numpy as np
+from scipy.signal import hilbert, butter, filtfilt
+
+def get_instantaneous_phase(signal, fs=1000, target_freq=(8, 12)):
+    b, a = butter(2, [target_freq[0]/(fs/2), target_freq[1]/(fs/2)], btype='band')
+    filtered = filtfilt(b, a, signal)
+    analytic_signal = hilbert(filtered)
+    phase = np.angle(analytic_signal)
+    return phase # Phase in radians (-pi to pi)
+</code></pre>
+
+        <footer>
+            <p>Neurotech Technical Blueprint | Prepared for Pranav Mohankumar | UIUC Neural Engineering</p>
+        </footer>
+    </div>
+</body>
+</html>
